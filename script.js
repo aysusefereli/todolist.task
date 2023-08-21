@@ -5,30 +5,36 @@ document.querySelector('#add_button').onclick = function() {
     else {
         document.querySelector('#lists').innerHTML += `
             <div class="task">
-                <span id="taskname">
+                <span class="taskname">
                     ${document.querySelector('#input_task').value}
                 </span>
-                <div id="buttons">
-                    <button id="edit">Edit<button>
-                    <button id="delete">Delete</button>
-                </div>
-                <hr>
+                <button class="edit">Edit</button>
+                <button class="delete">Delete</button>
             </div>
+            <hr>
         `;
 
         input_task.value = "";
 
-        let deletelist = document.querySelectorAll("#delete");
+        let deletelist = document.querySelectorAll(".delete");
         for(let i=0; i<deletelist.length; i++) {
             deletelist[i].onclick = function() {
-                this.parentNode.remove();
+                let taskElement = this.parentNode;
+                let hrElement = taskElement.nextElementSibling;
+                taskElement.remove();
+                hrElement.remove();
             }
         }
-        // let editlist = document.querySelectorAll("#edit");
-        // for(let i=0; i<editlist.length; i++){
-        //     editlist[i].onclick = function() {
-        //         editlist.replaceWith(input);
-        //     }
-        // }
+
+        let editlist = document.querySelectorAll(".edit");
+        for(let i=0; i<editlist.length; i++) {
+            editlist[i].onclick = function() {
+                let taskElement = this.parentNode;
+                let taskNameElement = taskElement.querySelector(".taskname");
+                let taskText = taskNameElement.textContent;
+                document.querySelector('#input_task').value = taskText;
+            }
+        }
     }
 }
+
